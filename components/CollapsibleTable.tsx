@@ -12,41 +12,11 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import type { GroupedFindingWithRawData, RawFinding } from '../pages/index';
 
-function createData(
-  name: string,
-  calories: number,
-  fat: number,
-  carbs: number,
-  protein: number,
-  price: number,
-) {
-  return {
-    name,
-    calories,
-    fat,
-    carbs,
-    protein,
-    price,
-    history: [
-      {
-        date: '2020-01-05',
-        customerId: '11091700',
-        amount: 3,
-      },
-      {
-        date: '2020-01-02',
-        customerId: 'Anonymous',
-        amount: 1,
-      },
-    ],
-  };
-}
-
-function Row(props: { row: ReturnType<typeof createData> }) {
-  const { row } = props;
+function Row(props: {row: GroupedFindingWithRawData}) {
   const [open, setOpen] = React.useState(false);
-
+  const row = props.row;
   return (
     <React.Fragment>
       <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
@@ -59,41 +29,43 @@ function Row(props: { row: ReturnType<typeof createData> }) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell component="th" scope="row">
-          {row.name}
-        </TableCell>
-        <TableCell align="right">{row.calories}</TableCell>
-        <TableCell align="right">{row.fat}</TableCell>
-        <TableCell align="right">{row.carbs}</TableCell>
-        <TableCell align="right">{row.protein}</TableCell>
+        <TableCell component="th" scope="row">{row.severity}</TableCell>
+        <TableCell>{row.grouped_finding_created}</TableCell>
+        <TableCell>{row.sla}</TableCell>
+        <TableCell>{row.description}</TableCell>
+        <TableCell>{row.security_analyst}</TableCell>
+        <TableCell>{row.owner}</TableCell>
+        <TableCell>{row.workflow}</TableCell>
+        <TableCell>{row.status}</TableCell>
+        <TableCell>{row.raw.length}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                History
+                Raw Findings
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <TableRow>
-                    <TableCell>Date</TableCell>
-                    <TableCell>Customer</TableCell>
-                    <TableCell align="right">Amount</TableCell>
-                    <TableCell align="right">Total price ($)</TableCell>
+                    <TableCell>SEVERITY</TableCell>
+                    <TableCell>TIME</TableCell>
+                    <TableCell>SOURCE</TableCell>
+                    <TableCell>DESCRIPTION</TableCell>
+                    <TableCell>ASSET</TableCell>
+                    <TableCell>STATUS</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {row.history.map((historyRow) => (
-                    <TableRow key={historyRow.date}>
-                      <TableCell component="th" scope="row">
-                        {historyRow.date}
-                      </TableCell>
-                      <TableCell>{historyRow.customerId}</TableCell>
-                      <TableCell align="right">{historyRow.amount}</TableCell>
-                      <TableCell align="right">
-                        {Math.round(historyRow.amount * row.price * 100) / 100}
-                      </TableCell>
+                  {row.raw.map((rawFinding: RawFinding) => (
+                    <TableRow key={rawFinding.id}>
+                      <TableCell component="th" scope="row">{rawFinding.severity}</TableCell>
+                      <TableCell>{rawFinding.finding_created}</TableCell>
+                      <TableCell>{rawFinding.source_collaboration_tool_name}</TableCell>
+                      <TableCell>{rawFinding.description}</TableCell>
+                      <TableCell>{rawFinding.asset}</TableCell>
+                      <TableCell>{rawFinding.status}</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>
@@ -106,31 +78,27 @@ function Row(props: { row: ReturnType<typeof createData> }) {
   );
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
-  createData('Ice cream sandwich', 237, 9.0, 37, 4.3, 4.99),
-  createData('Eclair', 262, 16.0, 24, 6.0, 3.79),
-  createData('Cupcake', 305, 3.7, 67, 4.3, 2.5),
-  createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
-];
-
-export default function CollapsibleTable() {
+export default function CollapsibleTable(props: {dataSet: GroupedFindingWithRawData[]}) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
         <TableHead>
           <TableRow>
             <TableCell />
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>SEVERITY</TableCell>
+            <TableCell>TIME</TableCell>
+            <TableCell>SLA</TableCell>
+            <TableCell>DESCRIPTION</TableCell>
+            <TableCell>SECURITY ANALYST</TableCell>
+            <TableCell>OWNER</TableCell>
+            <TableCell>WORK FLOW</TableCell>
+            <TableCell>STATUS</TableCell>
+            <TableCell># OF FINDINGS</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <Row key={row.name} row={row} />
+          {props.dataSet.map((row: GroupedFindingWithRawData) => (
+            <Row key={row.id} row={row} />
           ))}
         </TableBody>
       </Table>

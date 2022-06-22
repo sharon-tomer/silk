@@ -3,9 +3,10 @@ import {connectToDatabase} from '../lib/mongodb'
 import { GetServerSideProps } from 'next'
 import type { NextPage } from 'next'
 import styles from '../styles/Dashboard.module.css'
+import CollapsibleTable from '../components/CollapsibleTable'
 
 const Dashboard: NextPage<DashboardProps> = (props: DashboardProps) => {
-  return (
+  return props.isConnected? (
     <div className={styles.container}>
       <Head>
         <title>Silk Assignment</title>
@@ -16,13 +17,15 @@ const Dashboard: NextPage<DashboardProps> = (props: DashboardProps) => {
         <h1 className={styles.title}>
           Silk Dashboard
         </h1>
-
+        <div>
+          <CollapsibleTable dataSet={props.groupedFindings}></CollapsibleTable>
+        </div>
       </main>
 
       <footer className={styles.footer}>
       </footer>
     </div>
-  )
+  ): <div>loading...</div>
 }
 
 export const getServerSideProps: GetServerSideProps = async function getServerSideProps() {
@@ -43,7 +46,7 @@ export const getServerSideProps: GetServerSideProps = async function getServerSi
       .filter({})
       // .sort({ metacritic: -1 })
       // .limit(20)
-      .toArray();
+      .toArray()
 
     const groupedDump = await db
       .collection("grouped")
@@ -87,9 +90,9 @@ type GroupedFinding = {
   workflow?: string
 }
 
-type GroupedFindingWithRawData = GroupedFinding & { raw: RawFinding[] }
+export type GroupedFindingWithRawData = GroupedFinding & { raw: RawFinding[] }
 
-type RawFinding = {
+export type RawFinding = {
   grouped_finding_id: number,
   id: number,
   asset?: string,
@@ -107,7 +110,7 @@ type RawFinding = {
 }
 
 type DashboardProps = {
-  groupedFindings: GroupedFindingWithRawData,
+  groupedFindings: GroupedFindingWithRawData[],
   isConnected: true
 } | { isConnected: false }
 
