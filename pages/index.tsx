@@ -4,6 +4,9 @@ import { GetServerSideProps } from 'next'
 import type { NextPage } from 'next'
 import styles from '../styles/Dashboard.module.css'
 import CollapsibleTable from '../components/CollapsibleTable'
+import Pie from '../components/PieChart'
+import Image from 'next/image'
+import { DashboardProps, GroupedFinding, GroupedFindingWithRawData, RawFinding, SeverityCounts } from '../types/types'
 
 const Dashboard: NextPage<DashboardProps> = (props: DashboardProps) => {
   return props.isConnected? (
@@ -13,12 +16,20 @@ const Dashboard: NextPage<DashboardProps> = (props: DashboardProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className={styles.title}>
-          Silk Dashboard
-        </h1>
-        <div>
-          <CollapsibleTable dataSet={props.groupedFindings}></CollapsibleTable>
+      <main className={styles.main}>
+        <div className={styles.header}>
+          <div className={styles.logobox}><Image width={3628} height={972} src={"/logo.png"} layout={'responsive'}/></div>
+          <div className={styles.title}> Incident Dashboard </div>
+        </div>
+
+        <div className={styles.pieChart}>
+          <Pie data={getSeverityCounts(props.groupedFindings)}></Pie>
+        </div>
+
+        <div className={styles.scrollable}>
+          <div className={styles.findingsTable}>
+            <CollapsibleTable dataSet={props.groupedFindings}></CollapsibleTable>
+          </div>
         </div>
       </main>
 
@@ -28,31 +39,32 @@ const Dashboard: NextPage<DashboardProps> = (props: DashboardProps) => {
   ): <div>loading...</div>
 }
 
+function getSeverityCounts(groupedFindings: Array<GroupedFinding>) {
+  let severityCounts: SeverityCounts = {
+    'low': 0,
+    'medium': 0,
+    'high': 0,
+    'critical': 0
+  }
+  return groupedFindings.reduce((acc, finding) => {
+    finding.severity && acc[finding.severity]++;
+    return acc;
+  }, severityCounts);
+}
+
 export const getServerSideProps: GetServerSideProps = async function getServerSideProps() {
   try {
     const { db } = await connectToDatabase();
-    // `await clientPromise` will use the default database passed in the MONGODB_URI
-    // However you can use another database (e.g. myDatabase) by replacing the `await clientPromise` with the following code:
-    //
-    // `const client = await clientPromise`
-    // `const db = client.db("myDatabase")`
-    //
-    // Then you can execute queries against your database like so:
-    // db.find({}) or any of the MongoDB Node Driver commands
 
     const rawDump = await db
       .collection("raw")
       .find({})
       .filter({})
-      // .sort({ metacritic: -1 })
-      // .limit(20)
       .toArray()
 
     const groupedDump = await db
       .collection("grouped")
       .find({})
-      // .sort({ metacritic: -1 })
-      // .limit(20)
       .toArray();
 
     const raw: RawFinding[] = JSON.parse(JSON.stringify(rawDump));
@@ -73,45 +85,5 @@ export const getServerSideProps: GetServerSideProps = async function getServerSi
     }
   }
 }
-
-// bad types are bad
-type GroupedFinding = {
-  id: number,
-  description?: string,
-  grouped_finding_created?: string,
-  grouping_key?: string,
-  grouping_type?: string,
-  owner?: string,
-  progress?: number,
-  security_analyst?: string,
-  severity?: string,
-  sla?: string,
-  status?: string,
-  workflow?: string
-}
-
-export type GroupedFindingWithRawData = GroupedFinding & { raw: RawFinding[] }
-
-export type RawFinding = {
-  grouped_finding_id: number,
-  id: number,
-  asset?: string,
-  description?: string,
-  finding_created?: string,
-  remediation_text?: string,
-  remediation_url?: string,
-  severity?: string,
-  source_collaboration_tool_id?: string,
-  source_collaboration_tool_name?: string,
-  source_security_tool_id?: string,
-  source_security_tool_name?: string,
-  status?: string,
-  ticket_created?: string,
-}
-
-type DashboardProps = {
-  groupedFindings: GroupedFindingWithRawData[],
-  isConnected: true
-} | { isConnected: false }
 
 export default Dashboard;

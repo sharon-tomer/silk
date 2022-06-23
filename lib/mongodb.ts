@@ -8,8 +8,6 @@ const options = {}
 let cachedClient: mongoDB.MongoClient | null = null
 let cachedDb: mongoDB.Db | null = null
 
-connectToDatabase()
-
 export async function connectToDatabase(): Promise<{ client: mongoDB.MongoClient, db: mongoDB.Db }> {
   if (cachedClient && cachedDb) {
     return { client: cachedClient, db: cachedDb }
@@ -28,7 +26,7 @@ export async function connectToDatabase(): Promise<{ client: mongoDB.MongoClient
   }
 
   const client = new mongoDB.MongoClient(uri, options);
-
+  await client.connect();
   const db = await client.db(dbName)
 
   cachedClient = client

@@ -1614,6 +1614,10 @@ react-is@^17.0.2:
   version "17.0.2"
   resolved "https://registry.npmjs.org/react-is/-/react-is-17.0.2.tgz"
 
+react-minimal-pie-chart@^8.3.0:
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/react-minimal-pie-chart/-/react-minimal-pie-chart-8.3.0.tgz#cf6de3d712ea07e87e404276cbb811143ca00682"
+
 react-transition-group@^4.4.2:
   version "4.4.2"
   resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.2.tgz"
