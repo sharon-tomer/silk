@@ -46,7 +46,7 @@ function Pie(props: Props) {
       segmentsStyle={{ transition: 'stroke .3s', cursor: 'pointer' }}
       segmentsShift={(index) => (index === selected ? 6 : 1)}
       animate
-      label={({ dataEntry }) => Math.round(dataEntry.percentage) + '%'}
+      label={({ dataEntry }) => `${dataEntry.title}: ${dataEntry.value}`}
       labelPosition={110}
       labelStyle={{
         fill: '#fff',

@@ -12,7 +12,8 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import type { GroupedFindingWithRawData, RawFinding } from '../pages/index';
+import { GroupedFindingWithRawData, RawFinding } from '../types/types';
+import styles from '../styles/Dashboard.module.css'
 
 function Row(props: {row: GroupedFindingWithRawData}) {
   const [open, setOpen] = React.useState(false);
@@ -80,28 +81,32 @@ function Row(props: {row: GroupedFindingWithRawData}) {
 
 export default function CollapsibleTable(props: {dataSet: GroupedFindingWithRawData[]}) {
   return (
-    <TableContainer component={Paper}>
-      <Table aria-label="collapsible table">
-        <TableHead>
-          <TableRow>
-            <TableCell />
-            <TableCell>SEVERITY</TableCell>
-            <TableCell>TIME</TableCell>
-            <TableCell>SLA</TableCell>
-            <TableCell>DESCRIPTION</TableCell>
-            <TableCell>SECURITY ANALYST</TableCell>
-            <TableCell>OWNER</TableCell>
-            <TableCell>WORK FLOW</TableCell>
-            <TableCell>STATUS</TableCell>
-            <TableCell># OF FINDINGS</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {props.dataSet.map((row: GroupedFindingWithRawData) => (
-            <Row key={row.id} row={row} />
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <React.Fragment>
+      <div className={styles.scrollable}>
+        <TableContainer component={Paper}>
+          <Table aria-label="collapsible table" stickyHeader={true}>
+            <TableHead>
+              <TableRow>
+                <TableCell />
+                <TableCell>SEVERITY</TableCell>
+                <TableCell>TIME</TableCell>
+                <TableCell>SLA</TableCell>
+                <TableCell>DESCRIPTION</TableCell>
+                <TableCell>SECURITY ANALYST</TableCell>
+                <TableCell>OWNER</TableCell>
+                <TableCell>WORK FLOW</TableCell>
+                <TableCell>STATUS</TableCell>
+                <TableCell># OF FINDINGS</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {props.dataSet.map((row: GroupedFindingWithRawData) => (
+                <Row key={row.id} row={row} />
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    </React.Fragment>
   );
 }

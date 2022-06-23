@@ -7,6 +7,7 @@ import CollapsibleTable from '../components/CollapsibleTable'
 import Pie from '../components/PieChart'
 import Image from 'next/image'
 import { DashboardProps, GroupedFinding, GroupedFindingWithRawData, RawFinding, SeverityCounts } from '../types/types'
+import { Typography } from '@mui/material'
 
 const Dashboard: NextPage<DashboardProps> = (props: DashboardProps) => {
   return props.isConnected? (
@@ -19,17 +20,25 @@ const Dashboard: NextPage<DashboardProps> = (props: DashboardProps) => {
       <main className={styles.main}>
         <div className={styles.header}>
           <div className={styles.logobox}><Image width={3628} height={972} src={"/logo.png"} layout={'responsive'}/></div>
-          <div className={styles.title}> Incident Dashboard </div>
+          <div className={styles.title}>           
+            <Typography variant="h2" gutterBottom component="div">
+                  Incident Dashboard
+            </Typography> 
+          </div>
         </div>
 
         <div className={styles.pieChart}>
+            <Typography variant="h4" gutterBottom component="div" color={'whitesmoke'}>
+              Incidents By Severity
+            </Typography>
           <Pie data={getSeverityCounts(props.groupedFindings)}></Pie>
         </div>
 
-        <div className={styles.scrollable}>
-          <div className={styles.findingsTable}>
-            <CollapsibleTable dataSet={props.groupedFindings}></CollapsibleTable>
-          </div>
+        <div className={styles.findingsTable}>
+            <Typography variant="h4" gutterBottom component="div" color={'whitesmoke'}>
+              Grouped Findings
+            </Typography>
+          <CollapsibleTable dataSet={props.groupedFindings}></CollapsibleTable>
         </div>
       </main>
 

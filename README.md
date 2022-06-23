@@ -1,11 +1,12 @@
-This is a coding assignment for Silk.security by Tomer Sharon
+# Silk.security coding assignment
+## Tomer Sharon
 
 To run the project in dev env:
-yarn dev
-To run the project in prod env:
-pay me ;)
+yarn && yarn dev
 
 Some caveats:
-* This code is far from being production-ready.
+- This code is far from being production ready.
+- things that were left out of scope:
+    -
 
 
