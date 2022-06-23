@@ -28,14 +28,14 @@ const Dashboard: NextPage<DashboardProps> = (props: DashboardProps) => {
         </div>
 
         <div className={styles.pieChart}>
-            <Typography variant="h4" gutterBottom component="div" color={'whitesmoke'}>
+            <Typography variant="h4" gutterBottom component="div" color={'#F5F5F5'}>
               Incidents By Severity
             </Typography>
           <Pie data={getSeverityCounts(props.groupedFindings)}></Pie>
         </div>
 
         <div className={styles.findingsTable}>
-            <Typography variant="h4" gutterBottom component="div" color={'whitesmoke'}>
+            <Typography variant="h4" gutterBottom component="div" color={'#F5F5F5'}>
               Grouped Findings
             </Typography>
           <CollapsibleTable dataSet={props.groupedFindings}></CollapsibleTable>

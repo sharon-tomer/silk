@@ -81,32 +81,28 @@ function Row(props: {row: GroupedFindingWithRawData}) {
 
 export default function CollapsibleTable(props: {dataSet: GroupedFindingWithRawData[]}) {
   return (
-    <React.Fragment>
-      <div className={styles.scrollable}>
-        <TableContainer component={Paper}>
-          <Table aria-label="collapsible table" stickyHeader={true}>
-            <TableHead>
-              <TableRow>
-                <TableCell />
-                <TableCell>SEVERITY</TableCell>
-                <TableCell>TIME</TableCell>
-                <TableCell>SLA</TableCell>
-                <TableCell>DESCRIPTION</TableCell>
-                <TableCell>SECURITY ANALYST</TableCell>
-                <TableCell>OWNER</TableCell>
-                <TableCell>WORK FLOW</TableCell>
-                <TableCell>STATUS</TableCell>
-                <TableCell># OF FINDINGS</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {props.dataSet.map((row: GroupedFindingWithRawData) => (
-                <Row key={row.id} row={row} />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+      <div className={styles.tableframe}>
+        <Table aria-label="collapsible table" stickyHeader={true}>
+          <TableHead>
+            <TableRow>
+              <TableCell />
+              <TableCell>SEVERITY</TableCell>
+              <TableCell>TIME</TableCell>
+              <TableCell>SLA</TableCell>
+              <TableCell>DESCRIPTION</TableCell>
+              <TableCell>SECURITY ANALYST</TableCell>
+              <TableCell>OWNER</TableCell>
+              <TableCell>WORK FLOW</TableCell>
+              <TableCell>STATUS</TableCell>
+              <TableCell># OF FINDINGS</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {props.dataSet.map((row: GroupedFindingWithRawData) => (
+              <Row key={row.id} row={row} />
+            ))}
+          </TableBody>
+        </Table>
       </div>
-    </React.Fragment>
   );
 }

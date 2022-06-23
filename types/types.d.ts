@@ -1,5 +1,5 @@
 // bad types are bad
-type GroupedFinding = {
+export type GroupedFinding = {
     id: number,
     description?: string,
     grouped_finding_created?: string,
@@ -16,7 +16,6 @@ type GroupedFinding = {
   
   export type Severity = 'low' | 'medium' | 'high' | 'critical'
   export type SeverityCounts ={[severity in Severity]: number}
-  
   export type GroupedFindingWithRawData = GroupedFinding & { raw: RawFinding[] }
   
   export type RawFinding = {
@@ -36,7 +35,7 @@ type GroupedFinding = {
     ticket_created?: string,
   }
   
-  type DashboardProps = {
+  export type DashboardProps = {
     groupedFindings: GroupedFindingWithRawData[],
     isConnected: true
   } | { isConnected: false }

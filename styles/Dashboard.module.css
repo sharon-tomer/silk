@@ -13,35 +13,37 @@
   flex-basis: 75%;
 }
 
-.scrollable {
+.tableframe {
   height: 70vh;
-  overflow-y: scroll;
+  max-width: 90vw;
+  overflow: scroll;
   white-space: nowrap;
+  background-color: whitesmoke;
 }
 /* width */
-.scrollable::-webkit-scrollbar {
+.tableframe::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 /* Track */
-.scrollable::-webkit-scrollbar-track {
+.tableframe::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
 /* Handle */
-.scrollable::-webkit-scrollbar-thumb {
+.tableframe::-webkit-scrollbar-thumb {
   background: #888;
 }
 
 /* Handle on hover */
-.scrollable::-webkit-scrollbar-thumb:hover {
+.tableframe::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
 
 .findingsTable {
   min-height: 100vh;
   width: 90vw;
-  /* padding: 4rem 0; */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -50,8 +52,6 @@
 }
 
 .pieChart {
-  /* min-height: 100vh; */
-  /* padding: 4rem 0; */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -90,7 +90,7 @@
   margin: 0;
   line-height: 1.15;
   font-size: 4rem;
-  color: whitesmoke;
+  color: #F5F5F5;
 }
 
 .description {
@@ -100,14 +100,6 @@
 }
 
 .tablehead {
-  color: whitesmoke;
+  color: #F5F5F5;
   align-self: flex-start;
 }
-
-@media (max-width: 600px) {
-  .grid {
-    width: 100%;
-    flex-direction: column;
-  }
-}
-
