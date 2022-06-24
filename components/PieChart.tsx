@@ -24,13 +24,10 @@ function buildPieProps(data: SeverityCounts) {
 
 type Props = {
   data: SeverityCounts;
-};
+}
 
 function Pie(props: Props) {
   const [selected, setSelected] = useState<number | undefined>(0);
-  const [hovered, setHovered] = useState<number | undefined>(undefined);
-
-  const lineWidth = 60;
 
   return (
     <PieChart
@@ -55,12 +52,6 @@ function Pie(props: Props) {
       }}
       onClick={(_, index) => {
         setSelected(index === selected ? undefined : index);
-      }}
-      onMouseOver={(_, index) => {
-        setHovered(index);
-      }}
-      onMouseOut={() => {
-        setHovered(undefined);
       }}
     />
   );
