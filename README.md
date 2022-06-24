@@ -23,3 +23,4 @@ A partial list of things I thought about briefly and decided to leave out of sco
 - Smaller monitor/multi-platform support
 - User area (cookies, auth, session)
 
+However, if you do want me to implement some of these, let me know.
