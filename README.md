@@ -15,12 +15,11 @@ To run in production:
 pay me ;) j/k, just don't.
 
 A partial list of things I thought about briefly and decided to leave out of scope:
-- state management lib
-- routing
-- security, sanitization & permissions
-- abstractions and componentization
-- optimizations (caching, lazy loading, dynamic imports, package size etc)
-- smaller monitor/multi-platform support
-- fancy, pixel-perfect UI
-- user area (cookies, auth, session)
+- State management lib
+- Routing
+- Security, sanitization & permissions
+- Abstractions and componentization
+- Optimizations (caching, lazy loading, dynamic imports, package size etc)
+- Smaller monitor/multi-platform support
+- User area (cookies, auth, session)
 
