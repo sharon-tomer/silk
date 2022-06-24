@@ -12,6 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   
     res.status(200).json(raw);
   } catch(e) {
-    res.status(500)
+    res.status(500).json(e)
   }
 }
