@@ -1,7 +1,7 @@
 # Silk.security coding assignment
 ## By Tomer Sharon
 
-Hey Or,
+Hey Bar,
 Nice to almost meet you.
 Here's my submission of the assignment Yoav gave me a couple of days ago.
 I choose to code the front-end assignment because it felt like a good opportunity to take next.js for a spin, but I consider myself a full-stack engineer.
