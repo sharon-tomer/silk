@@ -1,5 +1,4 @@
 # Silk.security coding assignment
-## By Tomer Sharon
 
 Hey Bar,
 Nice to almost meet you.
@@ -24,3 +23,6 @@ A partial list of things I thought about briefly and decided to leave out of sco
 - User area (cookies, auth, session)
 
 However, if you do want me to implement some of these, let me know.
+
+Cheers,
+Tomer
