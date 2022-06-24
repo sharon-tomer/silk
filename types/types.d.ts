@@ -26,7 +26,7 @@ export type GroupedFinding = {
     finding_created?: string,
     remediation_text?: string,
     remediation_url?: string,
-    severity?: string,
+    severity?: Severity,
     source_collaboration_tool_id?: string,
     source_collaboration_tool_name?: string,
     source_security_tool_id?: string,
