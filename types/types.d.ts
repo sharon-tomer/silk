@@ -1,24 +1,41 @@
-import { ReportData } from './types.d';
-export interface Report {
-    title:	string,
-    description:	string,
-    created: string,
-    updated: string,
-    data:	Array<ReportData>
-}
-
-export type ReportData = EmissionData | NetZeroTargetData
-
-export type EmissionData = {
-  metricId: 'e1.1.1' | 'e1.2.1' | 'e1.3.1',
-  value: number
-}
-
-export type NetZeroTargetData = {
-  metricId: 'e1.1.1' | 'e1.2.1' | 'e1.3.1',
-  value: 'yes' | 'no'
-}
-
-export type FormProps = {
-
-}
+// bad types are bad
+export type GroupedFinding = {
+    id: number,
+    description?: string,
+    grouped_finding_created?: string,
+    grouping_key?: string,
+    grouping_type?: string,
+    owner?: string,
+    progress?: number,
+    security_analyst?: string,
+    severity?: Severity,
+    sla?: string,
+    status?: string,
+    workflow?: string
+  }
+  
+  export type Severity = 'low' | 'medium' | 'high' | 'critical'
+  export type SeverityCounts ={[severity in Severity]: number}
+  export type GroupedFindingWithRawData = GroupedFinding & { raw: RawFinding[] }
+  
+  export type RawFinding = {
+    grouped_finding_id: number,
+    id: number,
+    asset?: string,
+    description?: string,
+    finding_created?: string,
+    remediation_text?: string,
+    remediation_url?: string,
+    severity?: Severity,
+    source_collaboration_tool_id?: string,
+    source_collaboration_tool_name?: string,
+    source_security_tool_id?: string,
+    source_security_tool_name?: string,
+    status?: string,
+    ticket_created?: string,
+  }
+  
+  export type DashboardProps = {
+    groupedFindings: GroupedFindingWithRawData[],
+    isConnected: true
+  } | { isConnected: false }
